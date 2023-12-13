@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  chat_api:
+    build: ./server
+    volumes:
+      - ./server/src:/usr/src/app/src
+    ports:
+      - 3001:3001
+    command:
+      - yarn start:dev
+
+      
+  chat_client:
+    build: ./client
+    volumes:
+      - ./client/src:/usr/src/app/src
+    ports:
+      - 3000:3000
+    command:
+      - yarn start:dev
+
+
+  chat_db:
+    image: mysql
+    ports:
+      - 3307:3307
+    environment:
+      - MYSQL_ROOT_PASSWORD:pass
+      - MYSQL_DATABASE:chat_app
+      - MYSQL_USER:test
+      - MYSQL_PASSWORD:test123
+      - MYSQL_TCP_PORT:3307
